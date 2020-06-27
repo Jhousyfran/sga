@@ -1,0 +1,61 @@
+version: '3.1'
+services:
+  web:
+    image: jhousyfran/php7-3_apache
+    expose:
+      - "80/tcp"
+      - "443/tcp"
+    ports:
+      - "8000:80"
+      - "443:443"
+    environment:
+      ENVIRONMENT: www_sga
+    volumes:
+      - ./:/var/www/html
+      - ./logs/apache2:/var/log/apache2
+      - ./apache2/vhosts:/etc/apache2/from-host
+      - ./apache2/certs:/etc/apache2/ssl/from-host
+      - ./sites-available:/etc/apache2/sites-available
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      www_sga:
+#    entrypoint: ["/var/www/html/docker-entrypoint.sh"]
+#    tty: true
+
+  db:
+    image: mysql:5.7
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_520_ci']
+    expose:
+      - "3306/tcp"
+    ports:
+      - "3388:3306"
+    environment:
+      MYSQL_DATABASE: sga
+      MYSQL_USER: local
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./datadir:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d
+    networks:
+      www_sga:
+
+  node:
+      image: node:11
+      command: ['npm', 'dev', '--prefix', '/home/node/app']
+      ports: 
+        - "3010:3000"
+        - "3011:3001"
+      working_dir: /home/node/app
+      environment:
+        NODE_ENV: dev
+        WORKDIR: /home/node/app
+      volumes:
+        - ./:/home/node/app
+# docker network create www_sga
+networks:
+  www_sga:
+    external: true
