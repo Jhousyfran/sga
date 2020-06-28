@@ -1,6 +1,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import NotificaErrorForm from "./pages/Notifications/NotificationErrorForm";
 import NotificationSuccessForm from "./pages/Notifications/NotificationSuccessForm";
+import cookie from 'js-cookie'
 
 
 export default {
@@ -27,6 +28,12 @@ export default {
                 verticalAlign: 'top',
                 type: 'success'
             });
+        },
+        logout() {
+            cookie.set('provider_data', '');
+            cookie.set('provider_token', '');
+            window.axios.defaults.headers.common['USER-TOKEN'] = '';
+            window.location = "/";
         }
     },
 }

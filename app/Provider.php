@@ -35,7 +35,7 @@ class Provider extends Model
 
     public function products()
     {
-        return $this->hasMany(Products::class, 'provider_id', 'id');
+        return $this->hasMany(Product::class, 'provider_id', 'id');
     }
 
 
@@ -54,8 +54,11 @@ class Provider extends Model
         if(!$provider){
             return false;
         }
-
+        
         $provider->token = $provider->generateToken();
+        $provider->quantityOfproducts = count($provider->products);
+        $provider->totalAmountProducts = $provider->products->sum('amount');
+        unset($provider->products);
 
         return $provider;
     }

@@ -8,9 +8,9 @@
       </template>
       <mobile-menu>
         <li class="nav-item">
-          <a class="nav-link">
-            <i class="ti-settings"></i>
-            <p>Settings</p>
+          <a class="nav-link" @click="logout()">
+            <i class="ti-power-off"></i>
+            <p>Sair</p>
           </a>
         </li>
         <li class="divider"></li>
