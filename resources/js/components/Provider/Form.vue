@@ -20,11 +20,13 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="cpnj">CNPJ</label>
-          <input
-            type="text"
-            v-model="provider.cnpj"
+          <the-mask
             class="form-control"
-            :class="{'is-invalid': errors.cnpj}"
+            :class="{'is-invalid': errors.cnpj, 'is-invalid':errors.generic}"
+            v-model="provider.cnpj"
+            label="CNPJ"
+            mask="##.###.###/####-##"
+            placeholder="00.000.000/0000-00"
           />
           <div v-if="errors.cnpj" class="invalid-feedback">
             <span v-for="(error, i ) in errors.cnpj" :key="i">{{ error }}</span>
@@ -119,7 +121,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12" v-if="!edit">
         <div class="form-group">
           <label for="cpnj">Senha</label>
           <input
@@ -134,8 +136,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12 text-right">
+    <div class="col-md-12 text-right" v-if="!edit">
       <button class="btn btn-success" @click="sendForm()">Cadastrar</button>
+    </div>
+    <div class="col-md-12 text-right" v-else>
+      <button class="btn btn-success" @click="sendForm()">Atualizar</button>
     </div>
     <br />
   </div>

@@ -6,6 +6,7 @@ import NotificationSuccessForm from "./pages/Notifications/NotificationSuccessFo
 export default {
     computed: {
         ...mapGetters({
+            gProvider: 'Provider/provider'
         }),
     },
     methods: {

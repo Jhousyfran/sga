@@ -5,7 +5,7 @@ import NotFound from "./../pages/NotFoundPage.vue";
 
 // Admin pages
 import Dashboard from "./../pages/Dashboard.vue";
-import UserProfile from "./../pages/UserProfile.vue";
+import ProviderProfile from "./../pages/ProviderProfile.vue";
 import Notifications from "./../pages/Notifications.vue";
 import Icons from "./../pages/Icons.vue";
 import Products from "./../pages/Products.vue";
@@ -24,9 +24,9 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "stats",
+        path: "fornecedor",
         name: "Cadastro Fornecedor",
-        component: UserProfile
+        component: ProviderProfile
       },
       {
         path: "notifications",
@@ -39,7 +39,7 @@ const routes = [
         component: Icons
       },
       {
-        path: "table-list",
+        path: "produtos",
         name: "Produtos",
         component: Products
       }

@@ -33,7 +33,7 @@ class StoreProvider extends FormRequest
             'cnpj' => [
                 'required',
                 'unique:providers',
-                'max:20', //TODO: Validar o max
+                'size:14'
             ],
             'address_postal_code' => [
                 'required',

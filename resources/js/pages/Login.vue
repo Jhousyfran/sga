@@ -9,11 +9,42 @@
           <br />
           <div class="cart-text">
             <div class="col-12">
-              <fg-input type="text" label="CNPJ" placeholder="00.000.000/000-00"></fg-input>
-              <fg-input type="text" label="Token" placeholder="Token de acesso ao sistema"></fg-input>
-              <p-button type="primary" style="width:100%;">Entrar</p-button>
+              <div class="form-group">
+                <label for>CNPJ</label>
+                <the-mask
+                  class="form-control"
+                  :class="{'is-invalid': errors.cnpj, 'is-invalid':errors.generic}"
+                  v-model="provider.cnpj"
+                  label="CNPJ"
+                  mask="##.###.###/####-##"
+                  placeholder="00.000.000/0000-00"
+                />
+                <div v-if="errors.cnpj" class="invalid-feedback" style="display:block;">
+                  <span v-for="(error, i ) in errors.cnpj" :key="i">{{ error }}</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cpnj">Nome Empresa</label>
+                <input
+                  type="text"
+                  v-model="provider.password"
+                  class="form-control"
+                  :class="{'is-invalid': errors.password, 'is-invalid': errors.generic}"
+                />
+                <div v-if="errors.password" class="invalid-feedback" style="display:block;">
+                  <span v-for="(error, i ) in errors.password" :key="i">{{ error }}</span>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div v-if="errors.generic" class="invalid-feedback" style="display:block;">
+                  <span v-for="(error, i ) in errors.generic" :key="i">{{ error }}</span>
+                </div>
+                <br />
+              </div>
+              <p-button type="primary" style="width:100%;" @click.native="login()">Entrar</p-button>
             </div>
             <br />
+
             <div class="col-sm-12">
               <router-link to="/cadastro">Não tenho cadastro. Cadastrar-me agora.</router-link>
             </div>
@@ -26,7 +57,38 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-  name: "Login"
+  name: "Login",
+
+  data() {
+    return {
+      provider: {
+        cnpj: "",
+        password: ""
+      },
+      errors: {}
+    };
+  },
+
+  methods: {
+    ...mapActions({
+      setLogin: "Provider/login"
+    }),
+    async login() {
+      try {
+        let response = await this.setLogin(this.provider);
+        if (response.errors) {
+          this.errors = response.errors;
+          this.notifyErrorForm();
+          return 0;
+        }
+        this.$router.push({ name: "dashboard" });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 };
 </script>

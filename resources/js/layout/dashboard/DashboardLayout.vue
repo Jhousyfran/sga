@@ -3,8 +3,8 @@
     <side-bar>
       <template slot="links">
         <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel" />
-        <sidebar-link to="/stats" name="User Profile" icon="ti-user" />
-        <sidebar-link to="/table-list" name="Produtos" icon="ti-view-list-alt" />
+        <sidebar-link to="/fornecedor" name="Fornecedor" icon="ti-user" />
+        <sidebar-link to="/produtos" name="Produtos" icon="ti-view-list-alt" />
         <sidebar-link to="/icons" name="Icons" icon="ti-pencil-alt2" />
         <sidebar-link to="/notifications" name="Notifications" icon="ti-bell" />
       </template>
