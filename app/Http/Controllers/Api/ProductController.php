@@ -29,7 +29,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        
+        try {
+            $product = Product::create($request->all());
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json("Não foi possível salvar o dados. Erro: {$e->getMessage()} ", 422);
+        }
+        return response()->json($provider, 200);
     }
 
     /**
@@ -40,7 +49,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::where('id', $id)->first();
+
+        if(!$product){
+            return response()->json('Produto não encontrado', 404);
+        }
+
+        return response()->json($product, 200);
     }
 
     /**
