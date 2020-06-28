@@ -20,12 +20,11 @@
           <label for="cpnj">Quantidade</label>
           <the-mask
             class="form-control"
-            :class="{'is-invalid': errors.amount, 'is-invalid':errors.generic}"
+            :class="{'is-invalid': errors.amount}"
             v-model="product.amount"
             mask="######"
-            placeholder="00.000.000/0000-00"
           />
-          <div v-if="errors.amount" class="invalid-feedback">
+          <div v-if="errors.amount" class="invalid-feedback" style="display:block;">
             <span v-for="(error, i ) in errors.amount" :key="i">{{ error }}</span>
           </div>
         </div>
@@ -90,12 +89,13 @@ export default {
     async sendForm() {
       try {
         let response = await this.createproduct(this.product);
-        if (response.errors) {
-          this.errors = response.errors;
+        if (response.data.errors || response.status != 200) {
+          this.errors = response.data.errors;
           this.notifyErrorForm();
           return 0;
         }
         this.notifySuccessForm();
+        await this.getProducts();
         if (!this.edit) {
           this.$router.push({ name: "produtos" });
         }

@@ -18,8 +18,12 @@
                 <td>{{ product.description }}</td>
                 <td>{{ product.amount }}</td>
                 <td>
-                  <button class="btn btn-info btn-sm">Editar</button>
-                  <button class="btn btn-danger btn-sm">Excluir</button>
+                  <button class="btn btn-info btn-sm" title="Editar" @click="edit(product.id)">
+                    <span class="ti-eye"></span>
+                  </button>
+                  <button class="btn btn-danger btn-sm" title="Excluir" @click="remove(product.id)">
+                    <span class="ti-na"></span>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -50,6 +54,35 @@ export default {
         // data: [...tableData]
       }
     };
+  },
+
+  methods: {
+    ...mapActions({
+      getProducts: "Product/getAll",
+      removeProduct: "Product/remove"
+    }),
+    edit(id) {
+      this.$router.push({ name: "produto", params: { id: id } });
+    },
+    async remove(id) {
+      let a = confirm("Deseja realmente excluir este produto?");
+      if (!a) return 0;
+      try {
+        let response = await this.removeProduct(id);
+        if (!response.data.errors || response.status == 200) {
+          await this.getProducts();
+          alert("Excluido com sucesso");
+          return 0;
+        }
+      } catch (error) {}
+      alert("Erro não foi possível excluir");
+      return 0;
+    }
+  },
+  async mounted() {
+    if (!this.products.length) {
+      await this.getProducts();
+    }
   }
 };
 </script>

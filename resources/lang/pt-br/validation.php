@@ -157,6 +157,7 @@ return [
         'address_street' => 'endereço',
         'address_number' => 'número',
         'password' => 'senha',
+        'amount' => 'quantidade',
 
     ],
 

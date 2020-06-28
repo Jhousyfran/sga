@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\Product\StoreProduct;
 use App\Product;
+use DB;
 
 
 class ProductController extends Controller
@@ -16,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $all = Product::all();
+        $all = Product::orderBy('id','DESC')->get();
 
         return response()->json($all,200);
     }
@@ -27,7 +29,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
         DB::beginTransaction();
         
@@ -38,7 +40,7 @@ class ProductController extends Controller
             DB::rollBack();
             return response()->json("Não foi possível salvar o dados. Erro: {$e->getMessage()} ", 422);
         }
-        return response()->json($provider, 200);
+        return response()->json($product, 200);
     }
 
     /**
@@ -78,6 +80,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        
+        if(!$product){
+            return response()->json('Produto não encontrado', 404);
+        }
+        $product->delete();
+
+        return response()->json('Produto excluido com sucesso!', 200);
     }
 }

@@ -48,7 +48,12 @@ const routes = [
         path: "produto/novo",
         name: "Novo Produto",
         component: Product
-      }
+      },
+      {
+        path: "produto/:id",
+        name: "produto",
+        component: Product
+      },
     ]
   },
   {

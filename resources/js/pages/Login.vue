@@ -75,7 +75,8 @@ export default {
 
   methods: {
     ...mapActions({
-      setLogin: "Provider/login"
+      setLogin: "Provider/login",
+      getProducts: "Product/getAll"
     }),
     async login() {
       try {
@@ -85,6 +86,7 @@ export default {
           this.notifyErrorForm();
           return 0;
         }
+        await this.getProducts(window.$provider);
         this.$router.push({ name: "dashboard" });
       } catch (error) {
         console.log(error);

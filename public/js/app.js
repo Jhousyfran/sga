@@ -2398,7 +2398,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Formproduct",
@@ -2439,12 +2438,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 response = _context.sent;
 
-                if (!response.errors) {
+                if (!(response.data.errors || response.status != 200)) {
                   _context.next = 8;
                   break;
                 }
 
-                _this.errors = response.errors;
+                _this.errors = response.data.errors;
 
                 _this.notifyErrorForm();
 
@@ -2453,27 +2452,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 8:
                 _this.notifySuccessForm();
 
+                _context.next = 11;
+                return _this.getProducts();
+
+              case 11:
                 if (!_this.edit) {
                   _this.$router.push({
                     name: "produtos"
                   });
                 }
 
-                _context.next = 15;
+                _context.next = 17;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 14:
+                _context.prev = 14;
                 _context.t0 = _context["catch"](0);
 
                 _this.notifyErrorForm();
 
-              case 15:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 12]]);
+        }, _callee, null, [[0, 14]]);
       }))();
     }
   })
@@ -4959,7 +4962,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    setLogin: "Provider/login"
+    setLogin: "Provider/login",
+    getProducts: "Product/getAll"
   })), {}, {
     login: function login() {
       var _this = this;
@@ -4989,24 +4993,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context.abrupt("return", 0);
 
               case 8:
+                _context.next = 10;
+                return _this.getProducts(window.$provider);
+
+              case 10:
                 _this.$router.push({
                   name: "dashboard"
                 });
 
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 11]]);
+        }, _callee, null, [[0, 13]]);
       }))();
     }
   })
@@ -5314,7 +5322,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -5352,10 +5368,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PageProducts",
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     products: "Product/products"
   })),
   data: function data() {
@@ -5368,6 +5388,101 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       }
     };
+  },
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    getProducts: "Product/getAll",
+    removeProduct: "Product/remove"
+  })), {}, {
+    edit: function edit(id) {
+      this.$router.push({
+        name: "produto",
+        params: {
+          id: id
+        }
+      });
+    },
+    remove: function remove(id) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var a, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                a = confirm("Deseja realmente excluir este produto?");
+
+                if (a) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", 0);
+
+              case 3:
+                _context.prev = 3;
+                _context.next = 6;
+                return _this.removeProduct(id);
+
+              case 6:
+                response = _context.sent;
+
+                if (!(!response.data.errors || response.status == 200)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _context.next = 10;
+                return _this.getProducts();
+
+              case 10:
+                alert("Excluido com sucesso");
+                return _context.abrupt("return", 0);
+
+              case 12:
+                _context.next = 16;
+                break;
+
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](3);
+
+              case 16:
+                alert("Erro não foi possível excluir");
+                return _context.abrupt("return", 0);
+
+              case 18:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[3, 14]]);
+      }))();
+    }
+  }),
+  mounted: function mounted() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (_this2.products.length) {
+                _context2.next = 3;
+                break;
+              }
+
+              _context2.next = 3;
+              return _this2.getProducts();
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   }
 });
 
@@ -14068,11 +14183,8 @@ var render = function() {
             _vm._v(" "),
             _c("the-mask", {
               staticClass: "form-control",
-              class: {
-                "is-invalid": _vm.errors.amount,
-                "is-invalid": _vm.errors.generic
-              },
-              attrs: { mask: "######", placeholder: "00.000.000/0000-00" },
+              class: { "is-invalid": _vm.errors.amount },
+              attrs: { mask: "######" },
               model: {
                 value: _vm.product.amount,
                 callback: function($$v) {
@@ -14085,7 +14197,10 @@ var render = function() {
             _vm.errors.amount
               ? _c(
                   "div",
-                  { staticClass: "invalid-feedback" },
+                  {
+                    staticClass: "invalid-feedback",
+                    staticStyle: { display: "block" }
+                  },
                   _vm._l(_vm.errors.amount, function(error, i) {
                     return _c("span", { key: i }, [_vm._v(_vm._s(error))])
                   }),
@@ -18908,14 +19023,32 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(product.amount))]),
                         _vm._v(" "),
                         _c("td", [
-                          _c("button", { staticClass: "btn btn-info btn-sm" }, [
-                            _vm._v("Editar")
-                          ]),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-sm",
+                              attrs: { title: "Editar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.edit(product.id)
+                                }
+                              }
+                            },
+                            [_c("span", { staticClass: "ti-eye" })]
+                          ),
                           _vm._v(" "),
                           _c(
                             "button",
-                            { staticClass: "btn btn-danger btn-sm" },
-                            [_vm._v("Excluir")]
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { title: "Excluir" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.remove(product.id)
+                                }
+                              }
+                            },
+                            [_c("span", { staticClass: "ti-na" })]
                           )
                         ])
                       ])
@@ -38368,6 +38501,10 @@ var routes = [{
     path: "produto/novo",
     name: "Novo Produto",
     component: _pages_Product_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }, {
+    path: "produto/:id",
+    name: "produto",
+    component: _pages_Product_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   }]
 }, {
   path: "/login",
@@ -38463,12 +38600,124 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {}
+  state: {
+    products: [],
+    product: {}
+  },
+  getters: {
+    products: function products(state) {
+      return state.products;
+    },
+    product: function product(state) {
+      return state.product;
+    }
+  },
+  mutations: {
+    setProducts: function setProducts(state, payload) {
+      state.products = payload;
+    }
+  },
+  actions: {
+    create: function create(_ref, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var commit, last_url, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                last_url = payload.id ? "/" + payload.id : "";
+                _context.prev = 2;
+                _context.next = 5;
+                return window.axios.post('/produtos' + last_url, payload);
+
+              case 5:
+                response = _context.sent;
+                return _context.abrupt("return", response);
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                return _context.abrupt("return", _context.t0.response);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[2, 9]]);
+      }))();
+    },
+    getAll: function getAll(_ref2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return window.axios.get('/produtos');
+
+              case 4:
+                response = _context2.sent;
+                commit('setProducts', response.data);
+                _context2.next = 10;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    remove: function remove(_ref3, id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return window.axios["delete"]('/produtos/' + id);
+
+              case 4:
+                response = _context3.sent;
+                return _context3.abrupt("return", response);
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                return _context3.abrupt("return", _context3.t0.response);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),

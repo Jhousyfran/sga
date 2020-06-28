@@ -29,6 +29,15 @@ class Provider extends Model
         'updated_at',
     ];
 
+    /**
+     * Relacionamentos
+    **/
+
+    public function products()
+    {
+        return $this->hasMany(Products::class, 'provider_id', 'id');
+    }
+
 
     /**
      *  Metodos de Ações 
