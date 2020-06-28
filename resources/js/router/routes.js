@@ -9,6 +9,7 @@ import ProviderProfile from "./../pages/ProviderProfile.vue";
 import Notifications from "./../pages/Notifications.vue";
 import Icons from "./../pages/Icons.vue";
 import Products from "./../pages/Products.vue";
+import Product from "./../pages/Product.vue";
 import Login from "./../pages/Login.vue";
 import Register from "./../pages/Register.vue";
 
@@ -40,8 +41,13 @@ const routes = [
       },
       {
         path: "produtos",
-        name: "Produtos",
+        name: "produtos",
         component: Products
+      },
+      {
+        path: "produto/novo",
+        name: "Novo Produto",
+        component: Product
       }
     ]
   },

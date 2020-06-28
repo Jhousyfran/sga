@@ -24,6 +24,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->bigInteger('amount');
             $table->longText('description');
+            $table->unsignedBigInteger('provider_id');
+            $table->foreign('provider_id')->references('id')->on('providers');
             $table->timestamps();
             $table->softDeletes();
         });

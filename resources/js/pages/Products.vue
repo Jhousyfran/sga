@@ -1,72 +1,53 @@
 <template>
-  <div class="row">
+  <div class="row" style="min-height: 400px;">
     <div class="col-12">
       <card :title="table1.title" :subTitle="table1.subTitle">
-        <div slot="raw-content" class="table-responsive">
-          <paper-table :data="table1.data" :columns="table1.columns"></paper-table>
+        <template v-slot:button>
+          <router-link to="/produto/novo">
+            <button class="btn btn-sm btn-success">Novo Produto</button>
+          </router-link>
+        </template>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <th v-for="column in columns" :key="column">{{column}}</th>
+            </thead>
+            <tbody>
+              <tr v-for="(product, index) in products" :key="index">
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.amount }}</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Editar</button>
+                  <button class="btn btn-danger btn-sm">Excluir</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </card>
     </div>
   </div>
 </template>
 <script>
-import { PaperTable } from "../components";
-const tableColumns = ["Id", "Name", "Salary", "Country", "City"];
-const tableData = [
-  {
-    id: 1,
-    name: "Dakota Rice",
-    salary: "$36.738",
-    country: "Niger",
-    city: "Oud-Turnhout"
-  },
-  {
-    id: 2,
-    name: "Minerva Hooper",
-    salary: "$23,789",
-    country: "Curaçao",
-    city: "Sinaai-Waas"
-  },
-  {
-    id: 3,
-    name: "Sage Rodriguez",
-    salary: "$56,142",
-    country: "Netherlands",
-    city: "Baileux"
-  },
-  {
-    id: 4,
-    name: "Philip Chaney",
-    salary: "$38,735",
-    country: "Korea, South",
-    city: "Overland Park"
-  },
-  {
-    id: 5,
-    name: "Doris Greene",
-    salary: "$63,542",
-    country: "Malawi",
-    city: "Feldkirchen in Kärnten"
-  }
-];
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  components: {
-    PaperTable
+  name: "PageProducts",
+
+  computed: {
+    ...mapGetters({
+      products: "Product/products"
+    })
   },
   data() {
     return {
+      columns: ["Nome", "Descrição", "Quantidade", "Ações"],
       table1: {
-        title: "Stripped Table",
-        subTitle: "Here is a subtitle for this table",
-        columns: [...tableColumns],
-        data: [...tableData]
-      },
-      table2: {
-        title: "Table on Plain Background",
-        subTitle: "Here is a subtitle for this table",
-        columns: [...tableColumns],
-        data: [...tableData]
+        title: "Lista de Produtos",
+        subTitle: "Todos os produtos cadastrados"
+        // columns: [...tableColumns]
+        // data: [...tableData]
       }
     };
   }
