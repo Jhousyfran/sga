@@ -22,13 +22,14 @@ class CreateProvidersTable extends Migration
             $table->string('name');
             $table->string('cnpj')->unique();
             $table->string('address_postal_code');
-            $table->string('address_state');
+            $table->string('address_state', 2);
             $table->string('address_city');
             $table->string('address_district');
             $table->string('address_street');
             $table->string('address_number');
             $table->string('password');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

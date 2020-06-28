@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use DB;
-use App\Provider;
-use App\Http\Requests\Api\Provider\StoreProvider;
+use App\Product;
 
-class ProviderController extends Controller
+
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,9 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        $all = Provider::all();
+        $all = Product::all();
 
-        return response()->json($all, 200);
+        return response()->json($all,200);
     }
 
     /**
@@ -29,23 +27,9 @@ class ProviderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProvider $request)
+    public function store(Request $request)
     {
-        DB::beginTransaction();
-
-        try {
-
-            $data = $request->all();
-            $data['password'] = Hash::make($request->password);
-            $provider = Provider::create($data);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json("Não foi possível salvar o dados. Erro: {$e->getMessage()} ", 422);
-        }
-
-        return response()->json($provider, 200);
+        //
     }
 
     /**
@@ -56,13 +40,7 @@ class ProviderController extends Controller
      */
     public function show($id)
     {
-        $provider = Provider::find($id);
-
-        if(!$provider){
-            return response()->json('Fornecedor não encontrado', 404);
-        }
-
-        return response()->json($provider, 200);
+        //
     }
 
     /**
