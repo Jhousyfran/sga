@@ -89,6 +89,8 @@ export default {
     async sendForm() {
       try {
         let response = await this.createproduct(this.product);
+        console.log(response);
+
         if (response.data.errors || response.status != 200) {
           this.errors = response.data.errors;
           this.notifyErrorForm();
@@ -96,9 +98,7 @@ export default {
         }
         this.notifySuccessForm();
         await this.getProducts();
-        if (!this.edit) {
-          this.$router.push({ name: "produtos" });
-        }
+        this.$router.push({ name: "produtos" });
       } catch (error) {
         this.notifyErrorForm();
       }

@@ -51,7 +51,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::where('id', $id)->first();
+        $product = Product::find($id);
 
         if(!$product){
             return response()->json('Produto não encontrado', 404);
@@ -69,7 +69,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if(!$product){
+            return response()->json('Produto não encontrado', 404);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $product->update($request->all());
+            DB::commit();
+        } catch (\Exception $th) {
+            DB::rollBack();
+            return response()->json("Não foi possível salvar o dados. Erro: {$e->getMessage()} ", 422);
+        }
+
+        return response()->json($product, 200);
     }
 
     /**

@@ -11,14 +11,21 @@ export default {
     mutations: {
         setProducts(state, payload) {
             state.products = payload;
+        },
+        setProduct(state, payload) {
+            state.product = payload;
         }
     },
     actions: {
 
         async create({ commit }, payload) {
-            let last_url = payload.id ? "/" + payload.id : "";
             try {
-                let response = await window.axios.post('/produtos' + last_url, payload);
+                let response = false;
+                if (payload.id) {
+                    response = await window.axios.put('/produtos/' + payload.id, payload);
+                } else {
+                    response = await window.axios.post('/produtos', payload);
+                }
                 return response;
             } catch (error) {
                 return error.response;
@@ -31,6 +38,16 @@ export default {
                 commit('setProducts', response.data);
             } catch (error) {
 
+            }
+        },
+
+        async getProduct({ commit }, id) {
+            try {
+                let response = await window.axios.get('/produtos/' + id);
+                commit('setProduct', response.data);
+                return response;
+            } catch (error) {
+                return error.response;
             }
         },
 
