@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'Api\\LoginController@login');
 
-Route::apiResources([
-    'fornecedores' => 'Api\\ProviderController',
-    'posts' => 'PostController'
-]);
+Route::middleware("JWT")->group(function() {
+    Route::apiResources([
+        'fornecedores' => 'Api\\ProviderController',
+        'produtos' => 'Api\\ProductController'
+    ]);
+});
