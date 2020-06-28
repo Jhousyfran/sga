@@ -9,6 +9,8 @@ import UserProfile from "./../pages/UserProfile.vue";
 import Notifications from "./../pages/Notifications.vue";
 import Icons from "./../pages/Icons.vue";
 import Products from "./../pages/Products.vue";
+import Login from "./../pages/Login.vue";
+import Register from "./../pages/Register.vue";
 
 const routes = [
   {
@@ -51,7 +53,19 @@ const routes = [
       {
         path: "/",
         name: "login",
-        // component: Dashboard
+        component: Login
+      },
+    ]
+  },
+  {
+    path: "/cadastro",
+    component: BeforeLayout,
+    // redirect: "/dashboard",
+    children: [
+      {
+        path: "/",
+        name: "cadastro",
+        component: Register
       },
     ]
   },

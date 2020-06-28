@@ -1,16 +1,6 @@
 <template>
   <div class="wrapper">
-    <br />
-    <br />
-    <div class="container" style="margin: auto auto;">
-      <h3 class="text-center">Cadastro</h3>
-      <div class="offset-md-2 col-md-8">
-        <div class="card">
-          <br />
-          <div class="cart-body"></div>
-        </div>
-      </div>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 <style lang="scss">

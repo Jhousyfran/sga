@@ -30,7 +30,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "chartist": "^0.11.0",
-    "es6-promise": "^4.2.4",
+    "es6-promise": "^4.2.8",
     "js-cookie": "^2.2.1",
     "vue": "^2.6.10",
     "vue-clickaway": "^2.1.0",

@@ -15,7 +15,7 @@
             </div>
             <br />
             <div class="col-sm-12">
-              <a href="/cadastro">Não tenho cadastro. Cadastra-me agora</a>
+              <router-link to="/cadastro">Não tenho cadastro. Cadastrar-me agora.</router-link>
             </div>
             <br />
           </div>

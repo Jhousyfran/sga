@@ -1,6 +1,6 @@
-import App from './modules/App';
-import Provider from './modules/Provider';
-import Product from './modules/Product';
+import App from './modules/App.js';
+import Provider from './modules/Provider.js';
+import Product from './modules/Product.js';
 
 export default {
     modules: {

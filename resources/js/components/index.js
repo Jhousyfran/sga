@@ -25,6 +25,7 @@ let components = {
 export default components;
 
 export {
+  FormProvider,
   FormGroupInput,
   Card,
   ChartCard,
