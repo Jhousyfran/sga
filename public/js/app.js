@@ -38291,6 +38291,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   // short for routes: routes
   linkActiveClass: "active"
 });
+router.beforeEach(function (to, from, next) {
+  var provider = window.$provider;
+
+  if (to.name !== 'cadastro' && to.name !== 'login' && !provider) {
+    next({
+      name: 'login'
+    });
+  } else next();
+});
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),

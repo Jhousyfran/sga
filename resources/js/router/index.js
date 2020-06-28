@@ -9,4 +9,12 @@ const router = new VueRouter({
   linkActiveClass: "active"
 });
 
+router.beforeEach((to, from, next) => {
+  let provider = window.$provider;
+  if ((to.name !== 'cadastro') && (to.name !== 'login') && !provider) {
+    next({ name: 'login' })
+  }
+  else next()
+});
+
 export default router;
