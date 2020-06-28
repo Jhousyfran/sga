@@ -2692,18 +2692,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 response = _context.sent;
 
-                if (!response.errors) {
-                  _context.next = 8;
+                if (!(response.data.errors || response.status != 200)) {
+                  _context.next = 9;
                   break;
                 }
 
-                _this.errors = response.errors;
+                console.log(response);
+                _this.errors = response.data.errors;
 
                 _this.notifyErrorForm();
 
                 return _context.abrupt("return", 0);
 
-              case 8:
+              case 9:
                 _this.notifySuccessForm();
 
                 if (!_this.edit) {
@@ -2712,21 +2713,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-                _context.next = 15;
+                _context.next = 16;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](0);
 
                 _this.notifyErrorForm();
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 12]]);
+        }, _callee, null, [[0, 13]]);
       }))();
     }
   })
@@ -4886,6 +4887,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -14267,7 +14269,10 @@ var render = function() {
             _vm.errors.cnpj
               ? _c(
                   "div",
-                  { staticClass: "invalid-feedback" },
+                  {
+                    staticClass: "invalid-feedback",
+                    staticStyle: { display: "block" }
+                  },
                   _vm._l(_vm.errors.cnpj, function(error, i) {
                     return _c("span", { key: i }, [_vm._v(_vm._s(error))])
                   }),
@@ -18085,9 +18090,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "cpnj" } }, [
-                      _vm._v("Nome Empresa")
-                    ]),
+                    _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Senha")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -18103,7 +18106,7 @@ var render = function() {
                         "is-invalid": _vm.errors.password,
                         "is-invalid": _vm.errors.generic
                       },
-                      attrs: { type: "text" },
+                      attrs: { type: "text", placeholder: "Senha" },
                       domProps: { value: _vm.provider.password },
                       on: {
                         input: function($event) {
@@ -38512,6 +38515,7 @@ window.$provider = provider_data;
   },
   mutations: {
     setLogin: function setLogin(state, payload) {
+      window.$provider = payload;
       js_cookie__WEBPACK_IMPORTED_MODULE_1___default.a.set('provider_data', payload);
       js_cookie__WEBPACK_IMPORTED_MODULE_1___default.a.set('provider_token', payload.token);
       state.provider = payload;
@@ -38533,12 +38537,12 @@ window.$provider = provider_data;
 
               case 4:
                 response = _context.sent;
-                return _context.abrupt("return", response.data);
+                return _context.abrupt("return", response);
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](1);
-                return _context.abrupt("return", _context.t0.response.data);
+                return _context.abrupt("return", _context.t0.response);
 
               case 11:
               case "end":

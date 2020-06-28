@@ -28,7 +28,7 @@
             mask="##.###.###/####-##"
             placeholder="00.000.000/0000-00"
           />
-          <div v-if="errors.cnpj" class="invalid-feedback">
+          <div v-if="errors.cnpj" class="invalid-feedback" style="display:block;">
             <span v-for="(error, i ) in errors.cnpj" :key="i">{{ error }}</span>
           </div>
         </div>
@@ -178,8 +178,9 @@ export default {
     async sendForm() {
       try {
         let response = await this.createProvider(this.provider);
-        if (response.errors) {
-          this.errors = response.errors;
+        if (response.data.errors || response.status != 200) {
+          console.log(response);
+          this.errors = response.data.errors;
           this.notifyErrorForm();
           return 0;
         }

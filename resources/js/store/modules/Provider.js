@@ -21,6 +21,7 @@ export default {
 
     mutations: {
         setLogin(state, payload) {
+            window.$provider = payload;
             cookie.set('provider_data', payload);
             cookie.set('provider_token', payload.token);
             state.provider = payload;
@@ -32,9 +33,9 @@ export default {
         async create({ commit }, payload) {
             try {
                 let response = await window.axios.post('/fornecedores', payload);
-                return response.data;
+                return response;
             } catch (error) {
-                return error.response.data;
+                return error.response;
             }
         },
 

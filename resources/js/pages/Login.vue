@@ -24,9 +24,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="cpnj">Nome Empresa</label>
+                <label for="cpnj">Senha</label>
                 <input
                   type="text"
+                  placeholder="Senha"
                   v-model="provider.password"
                   class="form-control"
                   :class="{'is-invalid': errors.password, 'is-invalid': errors.generic}"

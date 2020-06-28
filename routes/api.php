@@ -18,11 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('fornecedores', 'Api\\ProviderController@store');
 Route::post('login', 'Api\\LoginController@login');
 
 Route::middleware("JWT")->group(function() {
-    Route::apiResources([
-        'fornecedores' => 'Api\\ProviderController',
-        'produtos' => 'Api\\ProductController'
-    ]);
+    Route::apiResource('produtos','Api\\ProductController');
 });
