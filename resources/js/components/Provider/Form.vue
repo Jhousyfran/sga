@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <div v-if="address" class="row">
+    <div v-if="address || edit" class="row">
       <div class="col-md-3">
         <div class="form-group">
           <label for="cpnj">Estado</label>
@@ -94,7 +94,7 @@
         </div>
       </div>
     </div>
-    <div v-if="address" class="row">
+    <div v-if="address || edit" class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="cpnj">Avenida/Rua</label>
@@ -161,14 +161,10 @@ export default {
     edit: {
       type: Boolean,
       default: false
-    }
-  },
-
-  data() {
-    return {
-      errors: {},
-      address: false,
-      provider: {
+    },
+    provider: {
+      type: Object,
+      default: {
         name: "",
         cnpj: "",
         address_postal_code: "",
@@ -177,6 +173,13 @@ export default {
         address_district: "",
         address_street: ""
       }
+    }
+  },
+
+  data() {
+    return {
+      errors: {},
+      address: false
     };
   },
 

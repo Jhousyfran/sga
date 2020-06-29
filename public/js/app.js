@@ -2670,13 +2670,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     edit: {
       type: Boolean,
       "default": false
-    }
-  },
-  data: function data() {
-    return {
-      errors: {},
-      address: false,
-      provider: {
+    },
+    provider: {
+      type: Object,
+      "default": {
         name: "",
         cnpj: "",
         address_postal_code: "",
@@ -2685,6 +2682,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         address_district: "",
         address_street: ""
       }
+    }
+  },
+  data: function data() {
+    return {
+      errors: {},
+      address: false
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
@@ -3387,6 +3390,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -12934,7 +12938,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm.address
+    _vm.address || _vm.edit
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-3" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -13062,7 +13066,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.address
+    _vm.address || _vm.edit
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -13922,6 +13926,21 @@ var render = function() {
                       attrs: { type: "password", placeholder: "Senha" },
                       domProps: { value: _vm.provider.password },
                       on: {
+                        keypress: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.login()
+                        },
                         input: function($event) {
                           if ($event.target.composing) {
                             return

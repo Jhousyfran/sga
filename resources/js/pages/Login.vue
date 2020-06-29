@@ -32,6 +32,7 @@
                   v-model="provider.password"
                   class="form-control"
                   :class="{'is-invalid': errors.password, 'is-invalid': errors.generic}"
+                  @keypress.enter="login()"
                 />
                 <div v-if="errors.password" class="invalid-feedback" style="display:block;">
                   <span v-for="(error, i ) in errors.password" :key="i">{{ error }}</span>
