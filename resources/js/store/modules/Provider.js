@@ -35,6 +35,10 @@ export default {
                 let response = await window.axios.post('/fornecedores', payload);
                 return response;
             } catch (error) {
+                if (error.response.status == 403) {
+                    window.$provider = '';
+                    window.location = '/#/login'
+                }
                 return error.response;
             }
         },

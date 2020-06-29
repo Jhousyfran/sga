@@ -26,7 +26,7 @@
               <div class="form-group">
                 <label for="cpnj">Senha</label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Senha"
                   v-model="provider.password"
                   class="form-control"

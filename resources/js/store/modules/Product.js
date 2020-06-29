@@ -37,6 +37,10 @@ export default {
                 let response = await window.axios.get('/produtos')
                 commit('setProducts', response.data);
             } catch (error) {
+                if (error.response.status == 403) {
+                    window.$provider = '';
+                    window.location = '/#/login'
+                }
 
             }
         },
@@ -47,6 +51,10 @@ export default {
                 commit('setProduct', response.data);
                 return response;
             } catch (error) {
+                if (error.response.status == 403) {
+                    window.$provider = '';
+                    window.location = '/#/login'
+                }
                 return error.response;
             }
         },

@@ -2398,6 +2398,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Formproduct",
@@ -3624,11 +3625,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   name: "Register",
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    product: "Product/product"
+    loadProduct: "Product/product"
   })),
   data: function data() {
     return {
-      edit: false
+      edit: false,
+      product: {}
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
@@ -3643,17 +3645,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _this.product = {};
+
               if (!_this.$route.params.id) {
-                _context.next = 12;
+                _context.next = 14;
                 break;
               }
 
               _this.edit = true;
-              _context.prev = 2;
-              _context.next = 5;
+              _context.prev = 3;
+              _context.next = 6;
               return _this.getProduct(_this.$route.params.id);
 
-            case 5:
+            case 6:
               response = _context.sent;
 
               if (response.status != 200) {
@@ -3662,23 +3666,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
               }
 
-              _context.next = 12;
+              _this.product = _this.loadProduct;
+              _context.next = 14;
               break;
 
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](2);
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](3);
 
               _this.$router.push({
                 name: "produtos"
               });
 
-            case 12:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 9]]);
+      }, _callee, null, [[3, 11]]);
     }))();
   }
 });
@@ -12693,6 +12698,15 @@ var render = function() {
         ])
       : _c("div", { staticClass: "col-md-12 text-right" }, [
           _c(
+            "a",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { href: "javascript:history.back()" }
+            },
+            [_vm._v("Voltar")]
+          ),
+          _vm._v(" "),
+          _c(
             "button",
             {
               staticClass: "btn btn-success",
@@ -13812,7 +13826,7 @@ var render = function() {
                         "is-invalid": _vm.errors.password,
                         "is-invalid": _vm.errors.generic
                       },
-                      attrs: { type: "text", placeholder: "Senha" },
+                      attrs: { type: "password", placeholder: "Senha" },
                       domProps: { value: _vm.provider.password },
                       on: {
                         input: function($event) {
@@ -31159,8 +31173,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./resources/js/App.vue");
-/* harmony import */ var _axios_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./axios.js */ "./resources/js/axios.js");
-/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
+/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
+/* harmony import */ var _axios_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./axios.js */ "./resources/js/axios.js");
 /* harmony import */ var _store_main_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/main.js */ "./resources/js/store/main.js");
 /* harmony import */ var _mixins_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mixins.js */ "./resources/js/mixins.js");
 /* harmony import */ var es6_promise_auto__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! es6-promise/auto */ "./node_modules/es6-promise/auto.js");
@@ -31192,7 +31206,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_the_mask__WEBPACK_IMPORTED_MO
 
 window.onload = function () {
   var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-    router: _router_index__WEBPACK_IMPORTED_MODULE_4__["default"],
+    router: _router_index__WEBPACK_IMPORTED_MODULE_3__["default"],
     store: new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store(_store_main_js__WEBPACK_IMPORTED_MODULE_5__["default"]),
     render: function render(h) {
       return h(_App__WEBPACK_IMPORTED_MODULE_2__["default"]);
@@ -33734,14 +33748,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 response = _context2.sent;
                 commit('setProducts', response.data);
-                _context2.next = 10;
+                _context2.next = 11;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
 
-              case 10:
+                if (_context2.t0.response.status == 403) {
+                  window.$provider = '';
+                  window.location = '/#/login';
+                }
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -33769,9 +33788,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 _context3.prev = 9;
                 _context3.t0 = _context3["catch"](1);
+
+                if (_context3.t0.response.status == 403) {
+                  window.$provider = '';
+                  window.location = '/#/login';
+                }
+
                 return _context3.abrupt("return", _context3.t0.response);
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -33882,9 +33907,15 @@ window.$provider = provider_data;
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](1);
+
+                if (_context.t0.response.status == 403) {
+                  window.$provider = '';
+                  window.location = '/#/login';
+                }
+
                 return _context.abrupt("return", _context.t0.response);
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }

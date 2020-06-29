@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from 'vuex';
 import App from "./App";
-import './axios.js';
 import router from "./router/index";
+import './axios.js';
 import store from './store/main.js';
 import Mixins from './mixins.js';
 import 'es6-promise/auto'

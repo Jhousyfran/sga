@@ -16,13 +16,14 @@ export default {
 
   computed: {
     ...mapGetters({
-      product: "Product/product"
+      loadProduct: "Product/product"
     })
   },
 
   data() {
     return {
-      edit: false
+      edit: false,
+      product: {}
     };
   },
 
@@ -33,6 +34,7 @@ export default {
   },
 
   async created() {
+    this.product = {};
     if (this.$route.params.id) {
       this.edit = true;
       try {
@@ -40,6 +42,7 @@ export default {
         if (response.status != 200) {
           this.$router.push({ name: "produtos" });
         }
+        this.product = this.loadProduct;
       } catch (error) {
         this.$router.push({ name: "produtos" });
       }
