@@ -38,6 +38,7 @@ cp .env.example .env
 3\. Faça o build dos containers \(o container o **web** vai usar a porta 8000 e container db irá usar a porta 3388, certifique-se que essas portas estejam livre antes de continuar).
 
 ```
+docker network create www_sga
 docker-compose up -d
 ```
 
