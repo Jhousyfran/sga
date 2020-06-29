@@ -70,3 +70,25 @@ docker-compose run web php artisan migrate
 ```
 
 6\. Agora você pode acessar aplicação em [localhost:8000 ou clique aqui!](http://localhost:8000)
+
+#### Geradores de documentos para testes
+
+* [https://www.4devs.com.br/gerador\_de\_empresas](https://www.4devs.com.br/gerador_de_empresas)
+* [https://www.4devs.com.br/gerador\_de\_cnpj](https://www.4devs.com.br/gerador_de_cnpj)
+
+<br>
+#### Routes
+
+| **Method** | **URI** | **Action** |
+| ------ | --- | ------ |
+| POST | /api/login | Api\LoginController@login |
+| GET | /api/fornecedores | Api\ProviderController@index |
+| GET | /api/fornecedores/{id} | Api\ProviderController@show |
+| GET | /api/fornecedores/{id}/info | Api\ProviderController@info |
+| POST | /api/fornecedores | Api\ProviderController@store |
+| PUT | /api/fornecedores/{id} | Api\ProviderController@update |
+| GET | /api/produtos | Api\ProductController@index |
+| GET | /api/produtos/{id} | Api\ProductController@show |
+| POST | api/produtos | Api\ProductController@store |
+| PUT | api/produtos/{id} | Api\ProductController@update |
+| DELETE | api/produtos/{id} | Api\ProductController@destroy |
