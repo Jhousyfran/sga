@@ -79,6 +79,8 @@ docker-compose run web php artisan migrate
 <br>
 #### Routes
 <br>
+<br>
+<br>
 | **Method** | **URI** | **Action** |
 | ------ | --- | ------ |
 | POST | /api/login | Api\LoginController@login |
