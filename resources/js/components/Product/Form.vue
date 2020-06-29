@@ -91,8 +91,6 @@ export default {
     async sendForm() {
       try {
         let response = await this.createproduct(this.product);
-        console.log(response);
-
         if (response.data.errors || response.status != 200) {
           this.errors = response.data.errors;
           this.notifyErrorForm();

@@ -26,13 +26,24 @@ export default {
             cookie.set('provider_token', payload.token);
             state.provider = payload;
             window.axios.defaults.headers.common['USER-TOKEN'] = payload.token;
+        },
+        setProvider(state, payload) {
+            window.$provider = payload;
+            cookie.set('provider_data', payload);
+            state.provider = payload;
         }
     },
 
     actions: {
         async create({ commit }, payload) {
             try {
-                let response = await window.axios.post('/fornecedores', payload);
+                let response = false;
+                if (payload.id) {
+                    response = await window.axios.put('/fornecedores/' + payload.id, payload);
+                    commit('setProvider', response.data);
+                } else {
+                    response = await window.axios.post('/fornecedores', payload);
+                }
                 return response;
             } catch (error) {
                 if (error.response.status == 403) {

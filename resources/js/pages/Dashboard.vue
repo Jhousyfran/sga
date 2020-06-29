@@ -58,9 +58,15 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.statsCards[0].value = this.gProvider.totalAmountProducts;
-    this.statsCards[1].value = this.gProvider.quantityOfproducts;
+  async mounted() {
+    let response = await window.axios.get(
+      "/fornecedores/" + this.gProvider.id + "/info"
+    );
+
+    if (response.status === 200) {
+      this.statsCards[0].value = response.data.totalAmountProducts;
+      this.statsCards[1].value = response.data.quantityOfproducts;
+    }
   }
 };
 </script>

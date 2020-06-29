@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Api\Provider;
 
 use App\Http\Requests\Api\FormRequest;
+use App\Provider as ProviderModel;
 
-
-class StoreProvider extends FormRequest
+class UpdateProvider extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,8 @@ class StoreProvider extends FormRequest
      */
     public function rules()
     {
+        $provider = ProviderModel::getProviderLogged(TOKEN, true);
+
         return [
             'name' => [
                 'required',
@@ -32,7 +34,9 @@ class StoreProvider extends FormRequest
             ],
             'cnpj' => [
                 'required',
-                'size:14'
+                'size:14',
+                'cnpj',
+                "unique:providers,id,{$provider->id}"
             ],
             'address_postal_code' => [
                 'required',

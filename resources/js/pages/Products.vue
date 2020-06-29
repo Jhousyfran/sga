@@ -26,6 +26,9 @@
                   </button>
                 </td>
               </tr>
+              <tr v-if="products.length == 0">
+                <td colspan="4" class="text-center">Nenhum produto cadastrado.</td>
+              </tr>
             </tbody>
           </table>
         </div>

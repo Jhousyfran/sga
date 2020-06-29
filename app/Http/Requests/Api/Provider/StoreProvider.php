@@ -24,6 +24,7 @@ class StoreProvider extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name' => [
                 'required',
@@ -32,6 +33,7 @@ class StoreProvider extends FormRequest
             ],
             'cnpj' => [
                 'required',
+                'cnpj',
                 'unique:providers',
                 'size:14'
             ],

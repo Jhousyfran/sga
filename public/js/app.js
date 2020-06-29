@@ -2439,10 +2439,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 3:
                 response = _context.sent;
-                console.log(response);
 
                 if (!(response.data.errors || response.status != 200)) {
-                  _context.next = 9;
+                  _context.next = 8;
                   break;
                 }
 
@@ -2452,32 +2451,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 return _context.abrupt("return", 0);
 
-              case 9:
+              case 8:
                 _this.notifySuccessForm();
 
-                _context.next = 12;
+                _context.next = 11;
                 return _this.getProducts();
 
-              case 12:
+              case 11:
                 _this.$router.push({
                   name: "produtos"
                 });
 
-                _context.next = 18;
+                _context.next = 17;
                 break;
 
-              case 15:
-                _context.prev = 15;
+              case 14:
+                _context.prev = 14;
                 _context.t0 = _context["catch"](0);
 
                 _this.notifyErrorForm();
 
-              case 18:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 15]]);
+        }, _callee, null, [[0, 14]]);
       }))();
     }
   })
@@ -2709,12 +2708,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 response = _context.sent;
 
-                if (!(response.data.errors || response.status != 200)) {
+                if (!response.data.errors) {
                   _context.next = 9;
                   break;
                 }
 
-                console.log(response);
+                console.log("oi");
                 _this.errors = response.data.errors;
 
                 _this.notifyErrorForm();
@@ -2730,21 +2729,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-                _context.next = 16;
-                break;
+                return _context.abrupt("return", 0);
 
-              case 13:
-                _context.prev = 13;
+              case 14:
+                _context.prev = 14;
                 _context.t0 = _context["catch"](0);
-
-                _this.notifyErrorForm();
 
               case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 13]]);
+        }, _callee, null, [[0, 14]]);
       }))();
     }
   }),
@@ -3298,9 +3294,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/index */ "./resources/js/components/index.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/index */ "./resources/js/components/index.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3332,8 +3336,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    StatsCard: _components_index__WEBPACK_IMPORTED_MODULE_0__["StatsCard"],
-    ChartCard: _components_index__WEBPACK_IMPORTED_MODULE_0__["ChartCard"]
+    StatsCard: _components_index__WEBPACK_IMPORTED_MODULE_1__["StatsCard"],
+    ChartCard: _components_index__WEBPACK_IMPORTED_MODULE_1__["ChartCard"]
   },
 
   /**
@@ -3359,8 +3363,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.statsCards[0].value = this.gProvider.totalAmountProducts;
-    this.statsCards[1].value = this.gProvider.quantityOfproducts;
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return window.axios.get("/fornecedores/" + _this.gProvider.id + "/info");
+
+            case 2:
+              response = _context.sent;
+
+              if (response.status === 200) {
+                _this.statsCards[0].value = response.data.totalAmountProducts;
+                _this.statsCards[1].value = response.data.quantityOfproducts;
+              }
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   }
 });
 
@@ -3769,6 +3797,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -14373,46 +14404,61 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.products, function(product, index) {
-                      return _c("tr", { key: index }, [
-                        _c("td", [_vm._v(_vm._s(product.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(product.description))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(product.amount))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-info btn-sm",
-                              attrs: { title: "Editar" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.edit(product.id)
-                                }
-                              }
-                            },
-                            [_c("span", { staticClass: "ti-eye" })]
-                          ),
+                    [
+                      _vm._l(_vm.products, function(product, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(product.name))]),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger btn-sm",
-                              attrs: { title: "Excluir" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.remove(product.id)
+                          _c("td", [_vm._v(_vm._s(product.description))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(product.amount))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info btn-sm",
+                                attrs: { title: "Editar" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.edit(product.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_c("span", { staticClass: "ti-na" })]
-                          )
+                              },
+                              [_c("span", { staticClass: "ti-eye" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { title: "Excluir" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.remove(product.id)
+                                  }
+                                }
+                              },
+                              [_c("span", { staticClass: "ti-na" })]
+                            )
+                          ])
                         ])
-                      ])
-                    }),
-                    0
+                      }),
+                      _vm._v(" "),
+                      _vm.products.length == 0
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              {
+                                staticClass: "text-center",
+                                attrs: { colspan: "4" }
+                              },
+                              [_vm._v("Nenhum produto cadastrado.")]
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    2
                   )
                 ])
               ])
@@ -33987,6 +34033,11 @@ window.$provider = provider_data;
       js_cookie__WEBPACK_IMPORTED_MODULE_1___default.a.set('provider_token', payload.token);
       state.provider = payload;
       window.axios.defaults.headers.common['USER-TOKEN'] = payload.token;
+    },
+    setProvider: function setProvider(state, payload) {
+      window.$provider = payload;
+      js_cookie__WEBPACK_IMPORTED_MODULE_1___default.a.set('provider_data', payload);
+      state.provider = payload;
     }
   },
   actions: {
@@ -33999,15 +34050,34 @@ window.$provider = provider_data;
               case 0:
                 commit = _ref.commit;
                 _context.prev = 1;
-                _context.next = 4;
+                response = false;
+
+                if (!payload.id) {
+                  _context.next = 10;
+                  break;
+                }
+
+                _context.next = 6;
+                return window.axios.put('/fornecedores/' + payload.id, payload);
+
+              case 6:
+                response = _context.sent;
+                commit('setProvider', response.data);
+                _context.next = 13;
+                break;
+
+              case 10:
+                _context.next = 12;
                 return window.axios.post('/fornecedores', payload);
 
-              case 4:
+              case 12:
                 response = _context.sent;
+
+              case 13:
                 return _context.abrupt("return", response);
 
-              case 8:
-                _context.prev = 8;
+              case 16:
+                _context.prev = 16;
                 _context.t0 = _context["catch"](1);
 
                 if (_context.t0.response.status == 403) {
@@ -34017,12 +34087,12 @@ window.$provider = provider_data;
 
                 return _context.abrupt("return", _context.t0.response);
 
-              case 12:
+              case 20:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 8]]);
+        }, _callee, null, [[1, 16]]);
       }))();
     },
     login: function login(_ref2, payload) {

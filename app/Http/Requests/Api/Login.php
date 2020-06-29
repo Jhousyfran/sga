@@ -27,7 +27,8 @@ class Login extends FormRequest
         return [
             'cnpj' => [
                 'required',
-                // 'size:14'
+                'cnpj',
+                'size:14'
             ],
             'password' =>[
                 'required',

@@ -191,8 +191,9 @@ export default {
     async sendForm() {
       try {
         let response = await this.createProvider(this.provider);
-        if (response.data.errors || response.status != 200) {
-          console.log(response);
+        if (response.data.errors) {
+          console.log("oi");
+
           this.errors = response.data.errors;
           this.notifyErrorForm();
           return 0;
@@ -201,9 +202,8 @@ export default {
         if (!this.edit) {
           this.$router.push({ name: "login" });
         }
-      } catch (error) {
-        this.notifyErrorForm();
-      }
+        return 0;
+      } catch (error) {}
     }
   },
 
