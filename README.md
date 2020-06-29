@@ -77,7 +77,6 @@ docker-compose run web php artisan migrate
 * [https://www.4devs.com.br/gerador\_de\_cnpj](https://www.4devs.com.br/gerador_de_cnpj)
 
 <br>
-#### Routes
 <br>
 <br>
 <br>
