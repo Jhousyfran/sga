@@ -20,7 +20,7 @@
 
 #### Como rodar
 
-Antes de seguir os passos abaixo tenha certeza que o **docker** e **docker-compose** instalado na maquina. Para rodar este projeto:
+Antes de seguir os passos abaixo tenha certeza que o **docker** e **docker-compose** estão instalado na maquina. Para rodar este projeto:
 
 1\. Clone este repositorio e entre na pasta
 
@@ -35,7 +35,7 @@ cd sga
 cp .env.example .env
 ```
 
-3\. Faça o build dos containers \(o container o **web** vai usar a porta 8000 e container db irá usar a porta 3388, certifique-se que essas portas estejam livre antes de continuar).
+3\. Faça o build dos containers \, o container o **web** vai usar a porta 8000 e container **db** irá usar a porta 3388, certifique-se que essas portas estejam livre antes de continuar. Se seu usuário não estiver incluido no grupo de permissões do **docker e docker-compose**  será necessário executar os comandos como administrador (sudo)
 
 ```
 docker network create www_sga
@@ -55,12 +55,12 @@ docker-compose run node npm install
 docker-compose run node npm run prod
 ```
 
-6. Gere uma nova chave para o arquivo de configuração do laravel (.env) e der as permissões necessárias
+6. Gere uma nova chave para o arquivo de configuração do laravel (.env) e der as permissões necessárias (para dar permissões na pastas talvez seja necessário executar a ação como administrador "sudo") .
 
 ```
 docker-compose run web php artisan key:generate
-docker-compose run web chmod 775 bootstrap/cache/
-docker-compose run web chmod 777 storage/
+chmod 775 bootstrap/cache/
+chmod 777 storage/
 ```
 
 5\. Execute as migrations
