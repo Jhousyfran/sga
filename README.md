@@ -1,79 +1,69 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# G.S.A Desafio Técnico
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+#### O Desafio
 
-## About Laravel
+* Desenvolver uma SPA de cadastro de produtos e fornecedores.
+* O cadastro do fornecedor deverá conter os campos (nome, cnpj, endereço completo), o endereço deverá ser completado automaticamente através de um API pública de busca de CEPs. O produto deverá ter os campos (nome, quantidade e descrição)
+* O sistema deverá conter um login JWT do fornecedor, de forma que o mesmo ao realizar o login veja apenas os produtos que foram cadastrados por ele.
+* A aplicação deverá estar dentro de um container Docker.
+* A API deverá ser desenvolvida em Laravel, versão 6+
+* O SPA poderá ser desenvolvido em VueJS ou React.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### Tecnlogias Usadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Laravel
+* Vuejs
+* Docker
+* MySQL
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### Como rodar
 
-## Learning Laravel
+Antes de seguir os passos abaixo tenha certeza que o **docker** e **docker-compose** instalado na maquina. Para rodar este projeto:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1\. Clone este repositorio e entre na pasta
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+git clone https://github.com/Jhousyfran/sga.git
+cd sga
+```
 
-## Laravel Sponsors
+2\. Copie o arquivo de exemplo para criar o arquivo de  configurações
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+cp .env-example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+3\. Faça o build dos containers \(o container o **web** vai usar a porta 8000 e container db irá usar a porta 3388, certifique-se que essas portas estejam livre antes de continuar).
 
-## Contributing
+```
+docker-compose up -d
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4\. Instale as dependências
 
-## Code of Conduct
+```
+docker-compose run web composer install
+docker-compose run node npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5\. Faça o build do JS do front\-end da aplicacao
 
-## Security Vulnerabilities
+```
+docker-compose run node npm run prod
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. Gere uma nova chave para o arquivo de configuração do laravel (.env) e der as permissões necessárias
 
-## License
+```
+docker-compose run web php artisan key:generate
+docker-compose run web chmod 775 bootstrap/cache/
+docker-compose run web chmod 777 storage/
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5\. Execute as migrations
+
+```
+docker-compose run web php artisan migrate
+```
+
+ 6. Agora você pode acessar aplicação em [localhost:8000 ou clique aqui!](http://localhost:8000)
