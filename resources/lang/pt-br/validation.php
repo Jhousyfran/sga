@@ -158,6 +158,7 @@ return [
         'address_number' => 'número',
         'password' => 'senha',
         'amount' => 'quantidade',
+        'description' => 'descrição',
 
     ],
 

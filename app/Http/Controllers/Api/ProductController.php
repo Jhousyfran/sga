@@ -31,6 +31,11 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
+        $product = Product::where('name',$request->name)->first();
+        if($product){
+            return response()->json(['errors' => ['name'=> 'O nome já esta sendo utilizado']], 422);
+        }
+
         DB::beginTransaction();
         
         try {
@@ -73,6 +78,8 @@ class ProductController extends Controller
 
         if(!$product){
             return response()->json('Produto não encontrado', 404);
+        }elseif(($product->name != $request->name) && ($productName = Product::where('name', $request->name)->first()) ){
+            return response()->json(['errors' => ['name'=> 'O nome já esta sendo utilizado']], 422);
         }
 
         DB::beginTransaction();
