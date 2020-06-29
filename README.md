@@ -59,8 +59,8 @@ docker-compose run node npm run prod
 
 ```
 docker-compose run web php artisan key:generate
-sudo chmod 775 bootstrap/cache/
-sudo chmod 777 storage/
+sudo chmod 775 bootstrap/cache/ -R
+sudo chmod 777 storage/ -R
 ```
 
 5\. Execute as migrations
