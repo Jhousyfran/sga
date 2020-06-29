@@ -91,4 +91,4 @@ docker-compose run web php artisan migrate
 | GET | /api/produtos/{id} | Api\ProductController@show |
 | POST | api/produtos | Api\ProductController@store |
 | PUT | api/produtos/{id} | Api\ProductController@update |
-| DELETE | api/produtos/{id} | Api\ProductController@destroy |
+| DELETE | api/produtos/{id}  | Api\ProductController@destroy |
