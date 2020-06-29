@@ -1,6 +1,6 @@
 # G.S.A Desafio Técnico
-<br>
-![Tela](https://github.com/Jhousyfran/sga/blob/master/public/images/screenshot_init.png)
+
+![tela](https://github.com/Jhousyfran/sga/blob/master/public/images/screenshot_init.png?raw=true)
 
 #### O Desafio
 
