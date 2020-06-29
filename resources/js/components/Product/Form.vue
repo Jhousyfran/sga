@@ -47,6 +47,7 @@
       </div>
     </div>
     <div class="col-md-12 text-right" v-if="!edit">
+      <a href="javascript:history.back()" class="btn btn-warning">Voltar</a>
       <button class="btn btn-success" @click="sendForm()">Cadastrar</button>
     </div>
     <div class="col-md-12 text-right" v-else>

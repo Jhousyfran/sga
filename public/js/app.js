@@ -2399,6 +2399,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Formproduct",
@@ -2508,6 +2509,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -3337,6 +3340,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -12684,6 +12688,15 @@ var render = function() {
     !_vm.edit
       ? _c("div", { staticClass: "col-md-12 text-right" }, [
           _c(
+            "a",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { href: "javascript:history.back()" }
+            },
+            [_vm._v("Voltar")]
+          ),
+          _vm._v(" "),
+          _c(
             "button",
             {
               staticClass: "btn btn-success",
@@ -13128,6 +13141,15 @@ var render = function() {
     !_vm.edit
       ? _c("div", { staticClass: "col-md-12 text-right" }, [
           _c(
+            "a",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { href: "javascript:history.back()" }
+            },
+            [_vm._v("Voltar")]
+          ),
+          _vm._v(" "),
+          _c(
             "button",
             {
               staticClass: "btn btn-success",
@@ -13141,6 +13163,15 @@ var render = function() {
           )
         ])
       : _c("div", { staticClass: "col-md-12 text-right" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-warning",
+              attrs: { href: "javascript:history.back()" }
+            },
+            [_vm._v("Voltar")]
+          ),
+          _vm._v(" "),
           _c(
             "button",
             {
@@ -13258,7 +13289,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "logo-img" }, [
       _c("img", {
-        attrs: { src: __webpack_require__(/*! ../../assets/img/vue-logo.png */ "./resources/js/assets/img/vue-logo.png"), alt: "" }
+        attrs: { src: __webpack_require__(/*! ../../assets/img/gsa.png */ "./resources/js/assets/img/gsa.png"), alt: "" }
       })
     ])
   }
@@ -13768,6 +13799,8 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
+                      _c("br"),
+                      _vm._v(" "),
                       _c("label", { attrs: { for: "" } }, [_vm._v("CNPJ")]),
                       _vm._v(" "),
                       _c("the-mask", {
@@ -31291,14 +31324,14 @@ module.exports = "/fonts/themify.woff?a1ecc3b826d01251edddf29c3e4e1e97";
 
 /***/ }),
 
-/***/ "./resources/js/assets/img/vue-logo.png":
-/*!**********************************************!*\
-  !*** ./resources/js/assets/img/vue-logo.png ***!
-  \**********************************************/
+/***/ "./resources/js/assets/img/gsa.png":
+/*!*****************************************!*\
+  !*** ./resources/js/assets/img/gsa.png ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/vue-logo.png?c2a605fbc0e687b2e1b4b90a7c445cdd";
+module.exports = "/images/gsa.png?07e1853b7c95ae59a92523366732e66c";
 
 /***/ }),
 

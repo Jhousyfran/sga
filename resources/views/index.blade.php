@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  {{-- <link rel="icon" type="image/png" sizes="96x96" href="<%= webpackConfig.output.publicPath %>favicon.png"> --}}
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('images/fav-icon.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
   <title>S.G.A Desafio Técnico</title>

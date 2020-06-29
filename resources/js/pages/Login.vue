@@ -10,6 +10,7 @@
           <div class="cart-text">
             <div class="col-12">
               <div class="form-group">
+                <br />
                 <label for>CNPJ</label>
                 <the-mask
                   class="form-control"
