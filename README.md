@@ -32,7 +32,7 @@ cd sga
 2\. Copie o arquivo de exemplo para criar o arquivo de  configurações
 
 ```
-cp .env-example .env
+cp .env.example .env
 ```
 
 3\. Faça o build dos containers \(o container o **web** vai usar a porta 8000 e container db irá usar a porta 3388, certifique-se que essas portas estejam livre antes de continuar).
