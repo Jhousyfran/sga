@@ -2659,16 +2659,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "FormProvider",
   props: {
-    provider: {
-      type: Object,
-      "default": function _default() {
-        return {};
-      }
-    },
     edit: {
       type: Boolean,
       "default": false
@@ -2676,7 +2674,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      errors: {}
+      errors: {},
+      address: false,
+      provider: {
+        name: "",
+        cnpj: "",
+        address_postal_code: "",
+        address_state: "",
+        address_city: "",
+        address_district: "",
+        address_street: ""
+      }
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
@@ -2736,7 +2744,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee, null, [[0, 13]]);
       }))();
     }
-  })
+  }),
+  watch: {
+    "provider.address_postal_code": function providerAddress_postal_code(newValue) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log(_this2.provider.address_postal_code.length);
+
+                if (!(newValue && _this2.provider.address_postal_code.length == 8)) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                _this2.address = false;
+                response = "";
+                _context2.next = 6;
+                return window.axios.get("/cep/" + _this2.provider.address_postal_code);
+
+              case 6:
+                response = _context2.sent;
+                _this2.provider.address_state = response.data.uf;
+                _this2.provider.address_city = response.data.localidade;
+                _this2.provider.address_district = response.data.bairro;
+                _this2.provider.address_street = response.data.logradouro;
+                _this2.address = true;
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -3909,9 +3956,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/index */ "./resources/js/components/index.js");
-//
-//
-//
 //
 //
 //
@@ -12848,253 +12892,269 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("CEP")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "cpnj" } }, [_vm._v("CEP")]),
+            _vm._v(" "),
+            _c("the-mask", {
+              staticClass: "form-control",
+              class: { "is-invalid": _vm.errors.address_postal_code },
+              attrs: {
+                label: "CNPJ",
+                mask: "## ###-###",
+                placeholder: "00 000-000"
+              },
+              model: {
                 value: _vm.provider.address_postal_code,
+                callback: function($$v) {
+                  _vm.$set(_vm.provider, "address_postal_code", $$v)
+                },
                 expression: "provider.address_postal_code"
               }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_postal_code },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_postal_code },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.provider,
-                  "address_postal_code",
-                  $event.target.value
+            }),
+            _vm._v(" "),
+            _vm.errors.address_postal_code
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "invalid-feedback",
+                    staticStyle: { display: "block" }
+                  },
+                  _vm._l(_vm.errors.address_postal_code, function(error, i) {
+                    return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                  }),
+                  0
                 )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors.address_postal_code
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_postal_code, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
+              : _vm._e()
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Estado")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.provider.address_state,
-                expression: "provider.address_state"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_state },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_state },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+    _vm.address
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Estado")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address_state,
+                    expression: "provider.address_state"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { "is-invalid": _vm.errors.address_state },
+                attrs: { type: "text" },
+                domProps: { value: _vm.provider.address_state },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.provider, "address_state", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.provider, "address_state", $event.target.value)
-              }
-            }
-          }),
+              }),
+              _vm._v(" "),
+              _vm.errors.address_state
+                ? _c(
+                    "div",
+                    { staticClass: "invalid-feedback" },
+                    _vm._l(_vm.errors.address_state, function(error, i) {
+                      return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          ]),
           _vm._v(" "),
-          _vm.errors.address_state
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_state, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Cidade")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.provider.address_city,
-                expression: "provider.address_city"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_city },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_city },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Cidade")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address_city,
+                    expression: "provider.address_city"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { "is-invalid": _vm.errors.address_city },
+                attrs: { type: "text" },
+                domProps: { value: _vm.provider.address_city },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.provider, "address_city", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.provider, "address_city", $event.target.value)
-              }
-            }
-          }),
+              }),
+              _vm._v(" "),
+              _vm.errors.address_city
+                ? _c(
+                    "div",
+                    { staticClass: "invalid-feedback" },
+                    _vm._l(_vm.errors.address_city, function(error, i) {
+                      return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          ]),
           _vm._v(" "),
-          _vm.errors.address_city
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_city, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-5" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Bairro")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.provider.address_district,
-                expression: "provider.address_district"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_district },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_district },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "col-md-5" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Bairro")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address_district,
+                    expression: "provider.address_district"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { "is-invalid": _vm.errors.address_district },
+                attrs: { type: "text" },
+                domProps: { value: _vm.provider.address_district },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.provider,
+                      "address_district",
+                      $event.target.value
+                    )
+                  }
                 }
-                _vm.$set(_vm.provider, "address_district", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors.address_district
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_district, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
+              }),
+              _vm._v(" "),
+              _vm.errors.address_district
+                ? _c(
+                    "div",
+                    { staticClass: "invalid-feedback" },
+                    _vm._l(_vm.errors.address_district, function(error, i) {
+                      return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.address
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Avenida/Rua")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address_street,
+                    expression: "provider.address_street"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { "is-invalid": _vm.errors.address_street },
+                attrs: { type: "text" },
+                domProps: { value: _vm.provider.address_street },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.provider,
+                      "address_street",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.address_street
+                ? _c(
+                    "div",
+                    { staticClass: "invalid-feedback" },
+                    _vm._l(_vm.errors.address_street, function(error, i) {
+                      return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Número")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address_number,
+                    expression: "provider.address_number"
+                  }
+                ],
+                staticClass: "form-control",
+                class: { "is-invalid": _vm.errors.address_number },
+                attrs: { type: "text" },
+                domProps: { value: _vm.provider.address_number },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.provider,
+                      "address_number",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.address_number
+                ? _c(
+                    "div",
+                    { staticClass: "invalid-feedback" },
+                    _vm._l(_vm.errors.address_number, function(error, i) {
+                      return _c("span", { key: i }, [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Avenida/Rua")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.provider.address_street,
-                expression: "provider.address_street"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_street },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_street },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.provider, "address_street", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors.address_street
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_street, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "cpnj" } }, [_vm._v("Número")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.provider.address_number,
-                expression: "provider.address_number"
-              }
-            ],
-            staticClass: "form-control",
-            class: { "is-invalid": _vm.errors.address_number },
-            attrs: { type: "text" },
-            domProps: { value: _vm.provider.address_number },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.provider, "address_number", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors.address_number
-            ? _c(
-                "div",
-                { staticClass: "invalid-feedback" },
-                _vm._l(_vm.errors.address_number, function(error, i) {
-                  return _c("span", { key: i }, [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
       !_vm.edit
         ? _c("div", { staticClass: "col-md-12" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -14418,17 +14478,6 @@ var render = function() {
                 "div",
                 { staticClass: "cart-body" },
                 [_c("form-provider", { attrs: { provider: _vm.provider } })],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-12" },
-                [
-                  _c("router-link", { attrs: { to: "/login" } }, [
-                    _vm._v("Já sou cadastro. Fazer Login.")
-                  ])
-                ],
                 1
               ),
               _vm._v(" "),
@@ -31382,7 +31431,8 @@ var http = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
   timeout: 60000,
   headers: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': "*"
   }
 });
 http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';

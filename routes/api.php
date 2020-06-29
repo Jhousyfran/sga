@@ -24,3 +24,14 @@ Route::post('login', 'Api\\LoginController@login');
 Route::middleware("JWT")->group(function() {
     Route::apiResource('produtos','Api\\ProductController');
 });
+
+Route::get('/cep/{cep}', function(Request $request) {
+    $cep = $request->cep;
+    // dd($request->cep);
+
+    $url = "https://viacep.com.br/ws/$cep/json/";
+
+    $json = json_decode(file_get_contents($url), true);
+
+    return $json;
+});

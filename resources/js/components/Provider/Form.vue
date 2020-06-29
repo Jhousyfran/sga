@@ -36,19 +36,21 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="cpnj">CEP</label>
-          <input
-            type="text"
-            v-model="provider.address_postal_code"
+          <the-mask
             class="form-control"
             :class="{'is-invalid': errors.address_postal_code}"
+            v-model="provider.address_postal_code"
+            label="CNPJ"
+            mask="## ###-###"
+            placeholder="00 000-000"
           />
-          <div v-if="errors.address_postal_code" class="invalid-feedback">
+          <div v-if="errors.address_postal_code" class="invalid-feedback" style="display:block;">
             <span v-for="(error, i ) in errors.address_postal_code" :key="i">{{ error }}</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div v-if="address" class="row">
       <div class="col-md-3">
         <div class="form-group">
           <label for="cpnj">Estado</label>
@@ -92,7 +94,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div v-if="address" class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="cpnj">Avenida/Rua</label>
@@ -121,6 +123,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-12" v-if="!edit">
         <div class="form-group">
           <label for="cpnj">Senha</label>
@@ -154,12 +158,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "FormProvider",
   props: {
-    provider: {
-      type: Object,
-      default: function() {
-        return {};
-      }
-    },
     edit: {
       type: Boolean,
       default: false
@@ -168,7 +166,17 @@ export default {
 
   data() {
     return {
-      errors: {}
+      errors: {},
+      address: false,
+      provider: {
+        name: "",
+        cnpj: "",
+        address_postal_code: "",
+        address_state: "",
+        address_city: "",
+        address_district: "",
+        address_street: ""
+      }
     };
   },
 
@@ -192,6 +200,25 @@ export default {
         }
       } catch (error) {
         this.notifyErrorForm();
+      }
+    }
+  },
+
+  watch: {
+    async "provider.address_postal_code"(newValue) {
+      console.log(this.provider.address_postal_code.length);
+
+      if (newValue && this.provider.address_postal_code.length == 8) {
+        this.address = false;
+        let response = "";
+        response = await window.axios.get(
+          "/cep/" + this.provider.address_postal_code
+        );
+        this.provider.address_state = response.data.uf;
+        this.provider.address_city = response.data.localidade;
+        this.provider.address_district = response.data.bairro;
+        this.provider.address_street = response.data.logradouro;
+        this.address = true;
       }
     }
   }

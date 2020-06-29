@@ -11,9 +11,6 @@
             <div class="cart-body">
               <form-provider :provider="provider"></form-provider>
             </div>
-            <div class="col-md-12">
-              <router-link to="/login">Já sou cadastro. Fazer Login.</router-link>
-            </div>
             <br />
           </div>
         </div>
