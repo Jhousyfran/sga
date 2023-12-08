@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Provider;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 trait MultiTenanTable
 {
@@ -13,6 +14,7 @@ trait MultiTenanTable
 
         if (defined('TOKEN')) {
             $provider = Provider::getProviderLogged(TOKEN, true);
+            Auth::onceUsingId($provider->id);
 
             if ($provider) {
                 static::creating(function ($model) use ($provider) {

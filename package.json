@@ -28,6 +28,7 @@
     "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^5.4.0",
     "bootstrap": "^4.0.0",
     "chartist": "^0.11.0",
     "es6-promise": "^4.2.8",

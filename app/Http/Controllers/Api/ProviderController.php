@@ -96,6 +96,7 @@ class ProviderController extends Controller
         if (!$provider) {
             return response()->json('Fornecedor não encontrado', 404);
         }
+        $provider->error();
 
         DB::beginTransaction();
         try {

@@ -68,7 +68,10 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if (!$product) {
-            Log::warning('Produto não encontrado');
+            Log::warning('Produto não encontrado', [
+                "provider" => \Auth::user()->name,
+                "city" => \Auth::user()->address_city,
+            ]);
             return response()->json('Produto não encontrado', 404);
         }
 
