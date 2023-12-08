@@ -15,7 +15,7 @@ return [
     | messages to the logs. The name specified in this option should match
     | one of the channels defined in the "channels" configuration array.
     |
-    */
+     */
 
     'default' => env('LOG_CHANNEL', 'stack'),
 
@@ -32,7 +32,7 @@ return [
     |                    "errorlog", "monolog",
     |                    "custom", "stack"
     |
-    */
+     */
 
     'channels' => [
         'stack' => [
@@ -42,9 +42,19 @@ return [
         ],
 
         'single' => [
-            'driver' => 'single',
+            'driver' => 'monolog',
+            // 'path' => storage_path('logs/laravel.log'),
+            // 'level' => 'debug',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
+            'handler' => Monolog\Handler\RotatingFileHandler::class,
+            'with' => [
+                'filename' => storage_path('logs/app.log'),
+            ],
+            'formatter' => Monolog\Formatter\JsonFormatter::class,
+            'formatter_with' => [
+                'dateFormat' => 'Y-m-d',
+            ],
         ],
 
         'daily' => [

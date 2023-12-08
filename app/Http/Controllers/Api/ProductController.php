@@ -3,24 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Api\Product\StoreProduct;
 use App\Product;
 use DB;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use \DDTrace\SpanData;
 
 class ProductController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
+     * @param  \DDTrace\SpanData  $span
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $all = Product::orderBy('id','DESC')->get();
+        $all = Product::orderBy('id', 'DESC')->get();
+        // $span->meta['username'] = "jhousyfran";
+        // dd($span);
+        // dd(\Auth::user()->name);
 
-        return response()->json($all,200);
+        Log::info('Listagem de produto');
+
+        return response()->json($all, 200);
     }
 
     /**
@@ -31,13 +40,13 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
-        $product = Product::where('name',$request->name)->first();
-        if($product){
-            return response()->json(['errors' => ['name'=> 'O nome já esta sendo utilizado']], 422);
+        $product = Product::where('name', $request->name)->first();
+        if ($product) {
+            return response()->json(['errors' => ['name' => 'O nome já esta sendo utilizado']], 422);
         }
 
         DB::beginTransaction();
-        
+
         try {
             $product = Product::create($request->all());
             DB::commit();
@@ -58,7 +67,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if(!$product){
+        if (!$product) {
+            Log::warning('Produto não encontrado');
             return response()->json('Produto não encontrado', 404);
         }
 
@@ -76,10 +86,10 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        if(!$product){
+        if (!$product) {
             return response()->json('Produto não encontrado', 404);
-        }elseif(($product->name != $request->name) && ($productName = Product::where('name', $request->name)->first()) ){
-            return response()->json(['errors' => ['name'=> 'O nome já esta sendo utilizado']], 422);
+        } elseif (($product->name != $request->name) && ($productName = Product::where('name', $request->name)->first())) {
+            return response()->json(['errors' => ['name' => 'O nome já esta sendo utilizado']], 422);
         }
 
         DB::beginTransaction();
@@ -104,8 +114,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        
-        if(!$product){
+
+        if (!$product) {
             return response()->json('Produto não encontrado', 404);
         }
         $product->delete();

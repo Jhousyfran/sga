@@ -1,19 +1,21 @@
 <?php
 
 namespace App\Traits;
-use Illuminate\Database\Eloquent\Builder;
-use App\Provider;
 
-trait MultiTenanTable {
+use App\Provider;
+use Illuminate\Database\Eloquent\Builder;
+
+trait MultiTenanTable
+{
 
     protected static function bootMultitenantable()
     {
 
-        if(defined('TOKEN')){
+        if (defined('TOKEN')) {
             $provider = Provider::getProviderLogged(TOKEN, true);
 
             if ($provider) {
-                static::creating(function ($model) use ($provider){
+                static::creating(function ($model) use ($provider) {
                     $model->provider_id = $provider->id;
                 });
 

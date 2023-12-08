@@ -1,0 +1,6 @@
+logs:
+  - type: file
+    path: "/phpconference/log/app-*.log"
+    service: "phpconference"
+    source: "php"
+    sourcecategory: sourcecode

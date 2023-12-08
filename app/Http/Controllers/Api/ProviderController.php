@@ -3,24 +3,26 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use DB;
-use App\Provider;
 use App\Http\Requests\Api\Provider\StoreProvider;
 use App\Http\Requests\Api\Provider\UpdateProvider;
+use App\Provider;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class ProviderController extends Controller
 {
-    public function info($id){
+    public function info($id)
+    {
         $provider = Provider::find($id);
-        if(!$provider){
+        if (!$provider) {
             return response()->json('Fornecedor não encontrado', 404);
         }
         $provider->load('products');
         return response()->json([
             'quantityOfproducts' => count($provider->products),
-            'totalAmountProducts' =>  $provider->products->sum('amount')
+            'totalAmountProducts' => $provider->products->sum('amount'),
         ], 200);
     }
 
@@ -58,6 +60,8 @@ class ProviderController extends Controller
             return response()->json("Não foi possível salvar o dados. Erro: {$e->getMessage()} ", 422);
         }
 
+        Log::info("Nova empresa crida", ["name" => $provider->name, "city" => $provider->address_city]);
+
         return response()->json($provider, 200);
     }
 
@@ -71,7 +75,7 @@ class ProviderController extends Controller
     {
         $provider = Provider::find($id);
 
-        if(!$provider){
+        if (!$provider) {
             return response()->json('Fornecedor não encontrado', 404);
         }
 
@@ -89,7 +93,7 @@ class ProviderController extends Controller
     {
         $provider = Provider::find($id);
 
-        if(!$provider){
+        if (!$provider) {
             return response()->json('Fornecedor não encontrado', 404);
         }
 
